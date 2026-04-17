@@ -13,7 +13,7 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js"
       defer
     ></script>
-    <link rel="stylesheet" type="text/css" href="home.css" />
+    <link rel="stylesheet" type="text/css" href="css/home.css" />
     <style>
       .card-revealed {
         opacity: 1 !important;
@@ -619,16 +619,16 @@
           },
           getMoviePoster(movieTitle) {
             if (!movieTitle) {
-              return `/img/movies/Default-Poster.jpg`;
+              return `img/movies/Default-Poster.jpg`;
             }
 
-            return `/img/movies/${movieTitle.replaceAll(" ", "-")}-Poster.jpg`;
+            return `img/movies/${movieTitle.replaceAll(" ", "-")}-Poster.jpg`;
           },
           getMovieBackdrop(movieTitle) {
             if (!movieTitle) {
-              return `/img/movies/Default-Backdrop.jpg`;
+              return `img/movies/Default-Backdrop.jpg`;
             }
-            return `/img/movies/${movieTitle.replaceAll(" ", "-")}-Backdrop.jpg`;
+            return `img/movies/${movieTitle.replaceAll(" ", "-")}-Backdrop.jpg`;
           },
 
           async init() {
