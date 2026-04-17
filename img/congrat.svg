@@ -1,0 +1,28 @@
+
+
+
+
+
+
+
+
+
+
+<svg width="370" height="110" viewBox="0 0 370 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_b)">
+<rect width="370" height="110" rx="20" fill="white" fill-opacity="0.8"/>
+</g>
+<text x="110" y="45" font-family="Arial" font-size="24" font-weight="bold" fill="#595959">New Drop Happend</text>
+<text x="110" y="75" font-family="Arial" font-size="19" fill="#595959">New Serie Just Dro...</text>
+<rect x="26" y="30" width="50" height="50" rx="8" fill="#2e0204"/>
+<path d="M64.9285 44.2857H37.0714L51 55.7586L65.086 44.3179C65.0345 44.3028 64.9818 44.2921 64.9285 44.2857Z" fill="white"/>
+<path d="M51.676 57.9742C51.2813 58.2975 50.7133 58.2975 50.3186 57.9742L36 46.1778V64.6428C36 65.2346 36.4797 65.7143 37.0714 65.7143H64.9285C65.5203 65.7143 66 65.2346 66 64.6428V46.3364L51.676 57.9742Z" fill="white"/>
+<defs>
+<filter id="filter0_b" x="-20" y="-20" width="410" height="150" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImage" stdDeviation="10"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
+</filter>
+</defs>
+</svg>

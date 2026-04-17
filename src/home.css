@@ -1,0 +1,269 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,700,800");
+@import "tailwindcss" source("../../");
+
+@theme {
+  --color-brand-bg: #0a0a0f;
+  --color-brand-900: #2e0204;
+  --color-brand-800: #5c0408;
+  --color-brand-700: #89050c;
+  --color-brand-600: #b70710;
+  --color-brand-500: #e50914;
+  --color-brand-400: #ea3a43;
+  --color-brand-300: #ef6b72;
+  --color-brand-200: #f59da1;
+  --color-brand-100: #faced0;
+
+  --color-slate-100: oklch(90.54% 0.003 218.5); /* #dee0e1 */
+  --color-slate-200: oklch(81.04% 0.006 218.5); /* #bdc2c3 */
+  --color-slate-300: oklch(71% 0.01 218.5); /* #9ba3a6 */
+  --color-slate-400: oklch(60.86% 0.014 218.5); /* #7a8588 */
+  --color-slate-500: oklch(50.07% 0.017 218.5); /* #59666a (Base) */
+  --color-slate-600: oklch(43% 0.015 218.5); /* #475255 */
+  --color-slate-700: oklch(35.38% 0.012 218.5); /* #353d40 */
+  --color-slate-800: oklch(27.64% 0.007 218.5); /* #24292a */
+  --color-slate-900: oklch(18.95% 0.004 218.5); /* #121415 */
+}
+
+html,
+body {
+  background: var(--color-brand-bg);
+  color: var(--color-slate-100);
+  font-family: "Montserrat", helvetica, arial, sans-serif;
+  height: 100%;
+  overflow-x: hidden;
+  -ms-overflow-style: -ms-autohiding-scrollbar; /* auto-hides on inactivity */
+}
+
+.font-display {
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 0.03em;
+}
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+@layer base {
+  /* Scrollbar - Full Support */
+
+  /* 1. Firefox */
+  .cst-scrollbar {
+    scrollbar-width: thin; /* auto | thin | none */
+    scrollbar-color: #e50914 transparent; /* thumb | track */
+  }
+
+  /* 2. WebKit browsers: Chrome, Edge, Safari, Opera */
+  .cst-scrollbar::-webkit-scrollbar {
+    width: 10px; /* vertical scrollbar */
+    height: 10px; /* horizontal scrollbar */
+  }
+
+  .cst-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .cst-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #e50914; /* JumpersTV red example */
+    border-radius: 2px;
+    border: 2px solid transparent; /* creates padding around thumb */
+    background-clip: content-box; /* keeps border transparent */
+  }
+
+  .cst-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #b20710; /* darker red on hover */
+  }
+
+  .cst-scrollbar::-webkit-scrollbar-corner {
+    background: transparent; /* bottom-right corner where x/y bars meet */
+  }
+}
+
+/* Hero / Featured */
+.hero-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 100%;
+  min-height: 340px;
+  background: var(--color-brand-bg);
+}
+
+/* .hero-img-overlay { */
+/*   position: absolute; */
+/*   inset: 0; */
+/*   background: linear-gradient( */
+/*     to bottom, */
+/*     transparent 30%, */
+/*     rgba(0, 0, 0, 0.85) 100% */
+/*   ); */
+/*   z-index: 1; */
+/* } */
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Search */
+.search-bar {
+  background: rgba(255, 255, 255, 0.07);
+  border: 3px solid var(--color-brand-900);
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+.search-bar:focus-within {
+  border-color: var(--color-brand-700);
+  background: rgba(255, 255, 255, 0.1);
+}
+.search-bar input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  padding: 10px 0;
+  width: 100%;
+}
+.search-bar input::placeholder {
+  color: var(--color-slate-500);
+}
+
+.section-divider {
+  height: 1px;
+  background: var(--color-slate-300);
+  margin: 16px 0;
+}
+
+.movie_card {
+  position: relative;
+  display: block;
+  width: 800px;
+  height: 350px;
+  margin: 100px auto;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: all 0.4s;
+  box-shadow: 0px 0px 150px -45px var(--color-brand-900);
+  &:hover {
+    transform: scale(1.02);
+    transition: all 0.4s;
+    box-shadow: 0px 0px 120px -55px var(--color-brand-300);
+  }
+  .info_section {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-blend-mode: multiply;
+    z-index: 2;
+    border-radius: 10px;
+    .movie_header {
+      position: relative;
+      padding: 25px;
+      height: 40%;
+      h1 {
+        color: var(--color-brand-500);
+        font-weight: 800;
+      }
+      h4 {
+        color: #9ac7fa;
+        font-weight: 400;
+      }
+      .minutes {
+        display: inline-block;
+        margin-top: 10px;
+        color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+      }
+      .type {
+        display: inline-block;
+        color: #cee4fd;
+        margin-left: 10px;
+      }
+      .locandina {
+        position: relative;
+        float: left;
+        margin-right: 20px;
+        height: 120px;
+        box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5);
+      }
+    }
+    .movie_desc {
+      padding: 25px;
+      height: 50%;
+      .text {
+        color: #cfd6e1;
+      }
+    }
+  }
+  .movie_blur_back {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    height: 100%;
+    right: 0;
+    background-size: cover;
+    border-radius: 11px;
+    background: url("https://fsmedia.imgix.net/cd/c9/5e/ba/4817/4d9a/93f0/c776ec32ecbc/lara-crofts-neck-looks-unnatural-in-the-new-poster-for-tomb-raider.png");
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .movie_header {
+    width: 60%;
+  }
+
+  .movie_desc {
+    width: 50%;
+  }
+
+  .info_section {
+    background: linear-gradient(to right, #0d0d0c 50%, transparent 100%);
+  }
+
+  .movie_blur_back {
+    width: 80%;
+    background-position: -100% 10% !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .movie_card {
+    width: 95%;
+    margin: 70px auto;
+    min-height: 350px;
+    height: auto;
+  }
+
+  .movie_blur_back {
+    width: 100%;
+    background-position: 50% 50% !important;
+  }
+
+  .movie_header {
+    width: 100%;
+    margin-top: 85px;
+  }
+
+  .movie_desc {
+    width: 100%;
+  }
+
+  .info_section {
+    background: linear-gradient(to top, rgb(20, 20, 19) 50%, transparent 100%);
+    display: inline-grid;
+  }
+}

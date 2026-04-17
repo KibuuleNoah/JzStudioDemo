@@ -1,0 +1,69 @@
+/*primary color*/
+
+@import "tailwindcss" source("../../");
+
+:root {
+  --color-brand-900: #2e0204;
+  --color-brand-800: #5c0408;
+  --color-brand-700: #89050c;
+  --color-brand-600: #b70710;
+  --color-brand-500: #e50914;
+  --color-brand-400: #ea3a43;
+  --color-brand-300: #ef6b72;
+  --color-brand-200: #f59da1;
+  --color-brand-100: #faced0;
+}
+
+.bg-cream {
+  /* background-color: #FFF2E1; */
+  background-color: #0a0a0a;
+}
+
+/*font*/
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.bg-yellow-500 {
+  background-color: var(--color-brand-500);
+}
+.text-yellow-500 {
+  color: var(--color-brand-500);
+}
+.floating {
+  animation-name: floating;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+@keyframes floating {
+  0% {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, 8px);
+  }
+  100% {
+    transform: translate(0, -0px);
+  }
+}
+.floating-4 {
+  animation-name: floating;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+@keyframes floating-4 {
+  0% {
+    transform: translate(0, 0px);
+  }
+  50% {
+    transform: translate(0, 8px);
+  }
+  100% {
+    transform: translate(0, -0px);
+  }
+}
+.text-darken {
+  color: #0a0a0a;
+}

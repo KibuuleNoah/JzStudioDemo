@@ -1,0 +1,750 @@
+<!doctype html>
+
+<html lang="en" x-data="jzStudio">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jzStudio</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js"
+      defer
+    ></script>
+    <link rel="stylesheet" type="text/css" href="home.css" />
+    <style>
+      .card-revealed {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+      }
+      .twelve h1 {
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-align: center;
+        margin: auto;
+        white-space: nowrap;
+        padding-bottom: 13px;
+      }
+      .twelve h1:before {
+        background-color: #c50000;
+        content: "";
+        display: block;
+        height: 3px;
+        width: 75px;
+        margin-bottom: 5px;
+      }
+      .twelve h1:after {
+        background-color: #c50000;
+        content: "";
+        display: block;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 3px;
+        width: 75px;
+        margin-bottom: 0.25em;
+      }
+
+      div.twelve {
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TOP BAR -->
+
+    <div class="bg-gray-100 font-sans w-full m-0 mb-8 text-white">
+      <div class="bg-black shadow-brand-500 shadow-sm">
+        <div class="container mx-auto px-4">
+          <div class="flex items-center justify-between py-4">
+            <div class="relative md:mt-8">
+              <a
+                href="#"
+                class="text-lg relative z-50 font-bold tracking-widest text-white rounded-lg focus:outline-none focus:shadow-outline"
+                >Jz <span class="hidden sm:inline">Studio</span></a
+              >
+
+              <svg
+                class="h-11 z-40 absolute -top-2 -left-3"
+                viewBox="0 0 79 79"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M35.2574 2.24264C37.6005 -0.100501 41.3995 -0.100505 43.7426 2.24264L76.7574 35.2574C79.1005 37.6005 79.1005 41.3995 76.7574 43.7426L43.7426 76.7574C41.3995 79.1005 37.6005 79.1005 35.2574 76.7574L2.24264 43.7426C-0.100501 41.3995 -0.100505 37.6005 2.24264 35.2574L35.2574 2.24264Z"
+                  fill="var(--color-brand-500)"
+                />
+              </svg>
+            </div>
+
+            <!-- Assuming --brand-color-600 is your Red from the @theme -->
+            <div class="flex items-center" x-data="{ activeTab: 'movies' }">
+              <!-- Series Tab -->
+              <a
+                href="#"
+                @click.prevent="activeContentTab = 'series'"
+                class="text-sm text-gray-400 mr-4 pb-2 transition-all duration-200 border-b-2"
+                :class="activeContentTab === 'series' 
+            ? 'font-bold text-white border-brand-500' 
+            : 'font-semibold border-transparent hover:text-brand-300'"
+              >
+                Series
+              </a>
+
+              <!-- Movies Tab -->
+              <a
+                href="#"
+                @click.prevent="activeContentTab = 'movies'"
+                class="text-sm text-gray-400 mr-4 pb-2 transition-all duration-200 border-b-2"
+                :class="activeContentTab === 'movies' 
+            ? 'font-bold text-white border-brand-500' 
+            : 'font-semibold border-transparent hover:text-brand-300'"
+              >
+                Movies
+              </a>
+            </div>
+
+            <!-- Right Side: Auth Dropdown -->
+            <div
+              x-data="{ open: false }"
+              class="items-center relative"
+              @click.outside="open = false"
+            >
+              <button
+                @click="open = !open"
+                class="flex items-center text-white text-sm font-semibold px-4 py-2"
+              >
+                <span class="opacity-0">Account</span>
+                <i class="bx bx-user-circle mr-2 text-xl"></i>
+                <i
+                  class="bx bx-chevron-down ml-1 transition-transform duration-200"
+                  :class="open ? 'rotate-180' : ''"
+                ></i>
+              </button>
+
+              <!-- Dropdown Menu -->
+              <div
+                x-show="open"
+                x-transition:enter="transition ease-out duration-100"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                class="absolute right-0 mt-2 w-full bg-black/30 backdrop-blur-md rounded-xl shadow-brand-500 shadow-xs z-50"
+              >
+                <div class="p-2 flex flex-col gap-1 text-white">
+                  <a
+                    href="#"
+                    class="flex items-center gap-3 px-1 py-2 text-sm hover:text-brand-500 rounded-md transition"
+                  >
+                    <i class="bx bx-log-in-circle text-lg"></i> Sign in
+                  </a>
+                  <a
+                    href="#"
+                    class="flex items-center gap-3 px-1 py-2 text-sm hover:text-brand-500 rounded-md transition"
+                  >
+                    <i class="bx bx-user-plus text-lg"></i> Sign in
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MAIN LAYOUT -->
+    <div>
+      <!-- CENTER CONTENT -->
+      <main>
+        <!-- Hero + Search -->
+        <div class="fade-up delay-2" style="margin-bottom: 24px">
+          <div
+            class="hero-card shadow-lg shadow-brand-500/10"
+            style="padding: 32px 28px 28px"
+          >
+            <!-- Decorative lines -->
+            <svg
+              style="
+                position: absolute;
+                top: 0;
+                right: 0;
+                opacity: 0.2;
+                filter: blur(12px);
+                -webkit-filter: blur(12px);
+              "
+              width="280"
+              height="240"
+              viewBox="0 0 280 240"
+            >
+              <circle
+                cx="200"
+                cy="40"
+                r="120"
+                fill="none"
+                stroke="var(--color-brand-500)"
+                stroke-width="60"
+              />
+              <circle
+                cx="200"
+                cy="40"
+                r="80"
+                fill="none"
+                stroke="var(--color-brand-500)"
+                stroke-width="40"
+              />
+            </svg>
+            <div class="hero-content">
+              <h1
+                class="font-display text-lg text-white"
+                style="font-size: 52px; line-height: 1; margin-bottom: 6px"
+                x-text="activeContentTab === 'movies' ? 'VJ’d Movies Awaits' : 'Series mu Luganda'"
+              ></h1>
+              <p
+                style="
+                  font-size: 14px;
+                  color: var(--muted);
+                  margin-bottom: 20px;
+                  max-width: 380px;
+                "
+              >
+                Explore <span x-text="activeContentTab"></span> across
+                intresting genres, explained and translated by your VJ Jumperz
+                in Luganda.
+              </p>
+
+              <!-- Search -->
+              <div class="search-bar md:max-w-[70vw]">
+                <i
+                  class="bx bx-search text-gray-500 text-md"
+                  style="flex-shrink: 0"
+                ></i>
+                <input
+                  type="text"
+                  placeholder="Search titles"
+                  x-model="search"
+                />
+                <template x-if="search">
+                  <button
+                    @click="search=''"
+                    class="bg-transparent border-none text-muted cursor-pointer text-base"
+                  >
+                    <i class="bx bx-x"></i>
+                  </button>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================================== -->
+        <section>
+          <div class="p-8">
+            <div
+              x-show="movieDetailsDrawerOpen"
+              x-transition:enter="transition ease-out duration-300"
+              x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100"
+              x-transition:leave="transition ease-in duration-200"
+              x-transition:leave-start="opacity-100"
+              x-transition:leave-end="opacity-0"
+              @click="closeMovieDrawer()"
+              class="fixed inset-0 bg-black/40 backdrop-blur-xs z-40"
+              style="display: none"
+            ></div>
+
+            <!-- Responsive Drawer Container -->
+            <div
+              x-show="movieDetailsDrawerOpen"
+              x-transition:enter="transition transform ease-out duration-300"
+              x-transition:enter-start="translate-y-full md:translate-y-0 md:translate-x-full"
+              x-transition:enter-end="translate-y-0 md:translate-x-0"
+              x-transition:leave="transition transform ease-in duration-200"
+              x-transition:leave-start="translate-y-0 md:translate-x-0"
+              x-transition:leave-end="translate-y-full md:translate-y-0 md:translate-x-full"
+              class="fixed z-50 bg-black shadow-2xl p-6 inset-x-0 max-h-[80vh] md:max-h-full overflow-auto cst-scrollbar bottom-0 rounded-t-[2rem] md:inset-y-0 md:right-0 md:left-auto md:w-96 md:rounded-none"
+              style="display: none"
+            >
+              <div class="flex justify-end items-center mb-6">
+                <button
+                  @click="closeMovieDrawer()"
+                  class="text-gray-400 hover:text-gray-600"
+                >
+                  <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+
+              <template x-if="movieDetails">
+                <div class="space-y-4">
+                  <!-- Movie Details Section -->
+                  <div class="flex flex-col h-full">
+                    <!-- Poster & Header Area -->
+                    <div class="flex flex-col gap-6 mb-6">
+                      <!-- Poster -->
+
+                      <div
+                        class="relative w-full h-48 overflow-hidden rounded-2xl shadow-md"
+                      >
+                        <!-- The Image -->
+                        <img
+                          :src="movieDetails ? getMovieBackdrop(movieDetails.title) : ''"
+                          :alt="
+                          movieDetails ? getMovieBackdrop(movieDetails.title) : ''"
+                          class="w-full h-full object-cover"
+                        />
+
+                        <!-- Centered Title with Blur -->
+                        <div
+                          class="absolute inset-0 flex items-center justify-center"
+                        >
+                          <div
+                            class="bg-black-100 backdrop-blur-md rounded-2xl p-2 border border-red-600/30"
+                          >
+                            <span
+                              class="text-white font-bold text-xl drop-shadow-md"
+                              x-text="movieDetails.title"
+                            ></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Content Section -->
+                    <div class="p-1">
+                      <div class="mb-1">
+                        <p class="text-gray-400 text-lg">
+                          <span x-text="movieDetails.year"></span> •
+                          <span
+                            x-text="movieDetails.category === 'movie' ? 'Single' : 'Serie' "
+                          ></span>
+                          •
+                          <span
+                            x-text="`${movieDetails.category === 'movie' ? movieDetails.duration + ' Minutes' : movieDetails.episodes }`"
+                          ></span>
+                        </p>
+                      </div>
+
+                      <!-- Info Grid -->
+                      <div
+                        class="flex items-center justify-between border-b border-gray-800"
+                      >
+                        <div>
+                          <!-- <p class="text-gray-400 text-sm uppercase tracking-wider"> -->
+                          <!--   Genre -->
+                          <!-- </p> -->
+                          <p
+                            class="text-white font-semibold mt-1"
+                            x-text="movieDetails.genres"
+                          ></p>
+                        </div>
+                      </div>
+
+                      <!-- Outline -->
+                      <div class="mb-2">
+                        <h2 class="text-2xl font-bold text-gray-500 mb-4">
+                          Outline
+                        </h2>
+                        <p
+                          class="text-gray-300 leading-relaxed text-lg"
+                          x-text="movieDetails.outline"
+                        ></p>
+                      </div>
+
+                      <!-- Action Buttons -->
+                      <div class="grid grid-cols-2 gap-2 pt-1">
+                        <button
+                          class="flex-1 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-lg transition transform hover:scale-105 duration-200 flex items-center justify-center gap-1 text-sm"
+                        >
+                          <i class="bx bx-download text-md"></i>
+                          Download Now
+                        </button>
+                        <button
+                          class="flex-1 hover:bg-white hover:text-brand-500 text-white font-bold py-1 px-2 rounded-lg transition border border-gray-700 flex items-center justify-center gap-1 text-sm"
+                        >
+                          Add to WishList
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="h-px bg-brand-500 my-4"></div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </section>
+        <!-- ================================================================== -->
+
+        <!-- Results header -->
+
+        <div class="twelve">
+          <h1>
+            <span x-text="activeContentTab"></span>
+
+            <sub class="text-gray-700 text-md" x-text="20"></sub>
+          </h1>
+        </div>
+
+        <div class="p-3">
+          <template x-if="loading">
+            <!-- Movie Card Skeleton -->
+            <div>
+              <template x-for="i in 5" :key="i">
+                <div
+                  class="relative block w-full max-w-[800px] h-auto md:h-[350px] my-[70px] md:my-[100px] mx-auto overflow-hidden rounded-[10px] bg-zinc-900 shadow-lg animate-pulse"
+                >
+                  <div
+                    class="relative z-2 w-full h-full p-[25px] flex flex-col md:flex-row gap-6"
+                  >
+                    <div
+                      class="w-[100px] h-[120px] bg-zinc-700 rounded-md shrink-0"
+                    ></div>
+
+                    <div class="flex-1 space-y-4">
+                      <div class="h-8 bg-zinc-700 rounded w-3/4"></div>
+
+                      <div class="h-4 bg-zinc-700 rounded w-1/2"></div>
+
+                      <div class="flex gap-3">
+                        <div class="h-6 bg-zinc-700 rounded w-16"></div>
+                        <div class="h-6 bg-zinc-700 rounded w-24"></div>
+                      </div>
+
+                      <div class="pt-4 space-y-2">
+                        <div class="h-3 bg-zinc-700 rounded w-full"></div>
+                        <div class="h-3 bg-zinc-700 rounded w-full"></div>
+                        <div class="h-3 bg-zinc-700 rounded w-2/3"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </template>
+
+          <template x-for="(item, index) in content" :key="index">
+            <div
+              class="relative block w-full max-w-[800px] h-auto md:h-[350px] my-[70px] md:my-[100px] mx-auto overflow-hidden rounded-[10px] transition-all duration-700 ease-out shadow-[0px_0px_150px_-45px_var(--color-brand-900)] hover:scale-[1.02] hover:shadow-[0px_0px_120px_-55px_var(--color-brand-300)]"
+              x-data="{ shown: false }"
+              x-init="setTimeout(() => shown = true, 50)"
+              :class="shown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[40px]'"
+              :style="`transition-delay: ${index * 100}ms`"
+              @click="movieDetails = item"
+            >
+              <!-- Info Section -->
+              <div
+                class="relative z-[2] w-full h-full rounded-[10px] bg-blend-multiply inline-grid md:block bg-gradient-to-t md:bg-gradient-to-r from-[#141413] md:from-[#0d0d0c] from-50% to-transparent"
+              >
+                <!-- Header -->
+                <div
+                  class="relative p-[25px] h-auto md:h-[40%] w-full md:w-[60%] mt-[85px] md:mt-0"
+                >
+                  <img
+                    :src="getMoviePoster(item.title)"
+                    class="relative float-left mr-5 h-[120px] shadow-[0_0_20px_-10px_rgba(0,0,0,0.5)]"
+                  />
+                  <h1
+                    class="text-[var(--color-brand-500)] font-[800] text-2xl md:text-3xl"
+                    x-text="item.title"
+                  ></h1>
+                  <div class="flex justify-start">
+                    <span
+                      class="inline-block mt-[10px] text-white p-[5px]"
+                      x-text="item.year"
+                    ></span>
+                    <span class="inline-block mt-[10px] text-white p-[5px]"
+                      >•</span
+                    >
+                    <span
+                      class="inline-block font-bold mt-[10px] text-white p-[5px]"
+                      x-text="item.category === 'movie' ? item.duration : item.episodes"
+                    ></span>
+                  </div>
+                  <p
+                    class="inline-block text-gray-500 font-bold ml-[10px]"
+                    x-text="item.genres.join(', ')"
+                  ></p>
+                </div>
+                <!-- Description -->
+                <div class="p-[25px] h-auto md:h-[50%] w-full md:w-[50%]">
+                  <p
+                    class="text-[#cfd6e1] line-clamp-3 md:line-clamp-5"
+                    x-text="item.outline"
+                  ></p>
+                </div>
+              </div>
+              <!-- Background Image -->
+              <div
+                class="absolute top-0 right-0 z-[1] h-full w-full md:w-[80%] rounded-[11px] bg-cover bg-[50%_50%] md:bg-[-100%_10%]"
+                :style="`background-image: url('${getMovieBackdrop(item.title)}')`"
+              ></div>
+            </div>
+          </template>
+          <!-- <template x-for="item in content" :key="item.title"> -->
+          <!--   <div -->
+          <!--     class="relative block w-full max-w-[800px] h-auto md:h-[350px] my-[70px] md:my-[100px] mx-auto overflow-hidden rounded-[10px] transition-all duration-400 ease-in-out shadow-[0px_0px_150px_-45px_var(--color-brand-900)] hover:scale-[1.02] hover:shadow-[0px_0px_120px_-55px_var(--color-brand-300)]" -->
+          <!--     @click="movieDetails = item" -->
+          <!--   > -->
+          <!--     <!-- Info Section -->
+          <!--     <div -->
+          <!--       class="relative z-[2] w-full h-full rounded-[10px] bg-blend-multiply inline-grid md:block bg-gradient-to-t md:bg-gradient-to-r from-[#141413] md:from-[#0d0d0c] from-50% to-transparent" -->
+          <!--     > -->
+          <!--       <!-- Header -->
+          <!--       <div -->
+          <!--         class="relative p-[25px] h-auto md:h-[40%] w-full md:w-[60%] mt-[85px] md:mt-0" -->
+          <!--       > -->
+          <!--         <img -->
+          <!--           src="https://mr.comingsoon.it/imgdb/locandine/235x336/53750.jpg" -->
+          <!--           class="relative float-left mr-5 h-[120px] shadow-[0_0_20px_-10px_rgba(0,0,0,0.5)]" -->
+          <!--         /> -->
+          <!--         <h1 -->
+          <!--           class="text-[var(--color-brand-500)] font-[800] text-2xl md:text-3xl" -->
+          <!--           x-text="item.title" -->
+          <!--         ></h1> -->
+          <!--         <div class="flex justify-start"> -->
+          <!--           <span -->
+          <!--             class="inline-block mt-[10px] text-white p-[5px]" -->
+          <!--             x-text="item.year" -->
+          <!--           ></span> -->
+          <!--           <span class="inline-block mt-[10px] text-white p-[5px]"> -->
+          <!--             • -->
+          <!--           </span> -->
+          <!--           <span -->
+          <!--             class="inline-block font-bold mt-[10px] text-white p-[5px]" -->
+          <!--             x-text="item.category === 'movie' ? item.duration : item.episodes" -->
+          <!--           ></span> -->
+          <!--         </div> -->
+          <!--         <p -->
+          <!--           class="inline-block text-gray-500 font-bold ml-[10px]" -->
+          <!--           x-text="item.genres.join(', ')" -->
+          <!--         ></p> -->
+          <!--       </div> -->
+          <!---->
+          <!--       <!-- Description -->
+          <!--       <div class="p-[25px] h-auto md:h-[50%] w-full md:w-[50%]"> -->
+          <!--         <p class="text-[#cfd6e1]" x-text="item.outline"></p> -->
+          <!--       </div> -->
+          <!--     </div> -->
+          <!---->
+          <!--     <!-- Background Image -->
+          <!--     <div -->
+          <!--       class="absolute top-0 right-0 z-[1] h-full w-full md:w-[80%] rounded-[11px] bg-cover bg-[50%_50%] md:bg-[-100%_10%] shadow-none" -->
+          <!--       style=" -->
+          <!--         background-image: url(&quot;https://fsmedia.imgix.net/cd/c9/5e/ba/4817/4d9a/93f0/c776ec32ecbc/lara-crofts-neck-looks-unnatural-in-the-new-poster-for-tomb-raider.png&quot;); -->
+          <!--       " -->
+          <!--     ></div> -->
+          <!--   </div> -->
+          <!-- </template> -->
+        </div>
+      </main>
+    </div>
+
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>
+      eruda.init();
+    </script>
+    <script>
+      document.addEventListener("alpine:init", () => {
+        Alpine.data("jzStudio", () => ({
+          activeNav: "All",
+          activeGenre: "All",
+          activeYear: "All",
+          activeRating: "All",
+          search: "",
+          viewMode: "grid",
+
+          navCategories: ["All", "Movies", "Series"],
+
+          loading: true,
+          content: [],
+          content2: [
+            {
+              category: "series",
+              vj_jumper_exclusive: true,
+              title: "Sins of the Father",
+              poster_url: "https://toptv.ug",
+              year: 2023,
+              director: "VJ Jumper",
+              episodes: "45e",
+              genres: ["Drama", "Crime"],
+              outline:
+                "A gripping tale of family betrayal and the heavy price of past mistakes, produced for Toptv audiences.",
+            },
+            {
+              category: "series",
+              vj_jumper_exclusive: true,
+              title: "Quiapo Kid",
+              poster_url: "https://toptv.ug",
+              year: 2024,
+              director: "VJ Jumper",
+              episodes: "120e",
+              genres: ["Action", "Adventure"],
+              outline:
+                "The journey of a street-smart orphan surviving the tough alleys, narrated with the signature VJ Jumper energy.",
+            },
+            {
+              category: "series",
+              vj_jumper_exclusive: true,
+              title: "Soldierz Heart",
+              poster_url: "https://toptv.ug",
+              year: 2023,
+              director: "VJ Jumper",
+              episodes: "30e",
+              genres: ["Military", "Romance"],
+              outline:
+                "Follow the lives of elite soldiers balancing their duty to the nation and the matters of the heart.",
+            },
+          ],
+          movieDetailsDrawerOpen: false,
+          movieDetails: {},
+          activeContentTab: "series",
+          closeMovieDrawer() {
+            this.movieDetailsDrawerOpen = false;
+            this.movieDetails = {};
+          },
+          getMoviePoster(movieTitle) {
+            if (!movieTitle) {
+              return `/img/movies/Default-Poster.jpg`;
+            }
+
+            return `/img/movies/${movieTitle.replaceAll(" ", "-")}-Poster.jpg`;
+          },
+          getMovieBackdrop(movieTitle) {
+            if (!movieTitle) {
+              return `/img/movies/Default-Backdrop.jpg`;
+            }
+            return `/img/movies/${movieTitle.replaceAll(" ", "-")}-Backdrop.jpg`;
+          },
+
+          async init() {
+            this.$watch("movieDetails", (value) => {
+              if (value && Object.keys(value).length) {
+                this.movieDetailsDrawerOpen = true;
+              }
+            });
+
+            this.content = await new Promise((resolve) =>
+              setTimeout(
+                () =>
+                  resolve([
+                    {
+                      title: "Law of Revenge",
+                      year: "2020",
+                      category: "series",
+                      episodes: "2s · 62e",
+                      genres: ["Drama", "Thriller", "Revenge"],
+                      outline:
+                        "Two inseparable best friends have their lives torn apart by one fateful night. When Marissa takes the fall for a crime to protect Ellice, her time behind bars turns torturous — and when she's finally released, she returns with one goal: to claim everything Ellice owns, including her marriage.",
+                    },
+                    {
+                      title: "Love of My Life",
+                      year: "2020",
+                      category: "series",
+                      episodes: "1s · 80e",
+                      genres: ["Drama", "Romance", "Family"],
+                      outline:
+                        "The Gonzales family is unlike any other. When the favourite son Stefano is diagnosed with terminal cancer, he gathers his estranged family — including a secret lovechild and her vengeful mother — under one roof, testing how much each person is willing to sacrifice for love.",
+                    },
+                    {
+                      title: "Los Bastardos",
+                      year: "2018",
+                      category: "series",
+                      episodes: "3s · 250e",
+                      genres: ["Drama", "Romance", "Family"],
+                      outline:
+                        "Don Roman Cardinal, a powerful landlord, sired five sons from five different women — each raised in vastly different circumstances. When the truth of their shared blood is revealed, the brothers must struggle with betrayal, rivalry, and their desperate fight for their rightful place in their father's heart.",
+                    },
+                    {
+                      title: "Incognito",
+                      year: "2025",
+                      category: "series",
+                      episodes: "1 · 128e",
+                      genres: ["Action", "Crime", "Drama"],
+                      outline:
+                        "Seven dishonored soldiers and misfits, each carrying a painful past, are recruited by a covert private military company. Seeking redemption, they take on deadly classified missions targeting human trafficking rings that the government cannot touch — and quickly discover that the enemy is closer than they think.",
+                    },
+                    {
+                      title: "The Iron Heart",
+                      year: "2022",
+                      category: "series",
+                      episodes: "2s · 239e",
+                      genres: ["Action", "Crime", "Drama"],
+                      outline:
+                        "Apollo Adelantar, a mild-mannered accountant with a traumatic past, goes deep undercover inside Tatsulok — the Philippines' most ruthless crime syndicate. As he rises through their ranks, he must protect his identity, his allies, and his humanity while getting closer to the shadowy engineer at the top.",
+                    },
+                    {
+                      title: "20 Dakika",
+                      year: "2013",
+                      category: "series",
+                      episodes: "1s · 25e",
+                      genres: ["Action", "Drama", "Thriller"],
+                      outline:
+                        "Melek and Ali Halaskar are a happily married couple living a quiet life in Istanbul — until the night police arrive and arrest Melek for the attempted murder of a powerful politician's son. With damning evidence against her and a vindictive enemy working in the shadows, her devoted husband Ali will break every rule he's ever lived by to set her free.",
+                    },
+                    {
+                      title: "The Heiress",
+                      year: "2018",
+                      category: "series",
+                      episodes: "2s · 348e",
+                      genres: ["Crime", "Drama", "Romance"],
+                      outline:
+                        "Romina, a simple secretary, marries business tycoon Robert after a traumatic assault leaves her pregnant — unaware that his own daughter Daniela orchestrated the attack to steal her fiancé. As the years pass, Romina's daughter Cassandra and Daniela's daughter Marga are drawn into a bitter war over who is the true heiress to the Mondragon empire.",
+                    },
+                    {
+                      category: "series",
+                      title: "Sins of the Father",
+                      year: 2023,
+                      episodes: "45e",
+                      genres: ["Drama", "Crime"],
+                      outline:
+                        "A gripping tale of family betrayal and the heavy price of past mistakes, produced for Toptv audiences.",
+                    },
+                    {
+                      category: "series",
+                      title: "Quiapo Kid",
+                      year: 2024,
+                      episodes: "120e",
+                      genres: ["Action", "Adventure"],
+                      outline:
+                        "The journey of a street-smart orphan surviving the tough alleys, narrated with the signature VJ Jumper energy.",
+                    },
+                    {
+                      category: "series",
+                      title: "Soldierz Heart",
+                      year: 2023,
+                      episodes: "30e",
+                      genres: ["Military", "Romance"],
+                      outline:
+                        "Follow the lives of elite soldiers balancing their duty to the nation and the matters of the heart.",
+                    },
+                  ]),
+                2000,
+              ),
+            ); // domino reveal: stagger each card 120ms apart
+            this.loading = false;
+
+            /*for (let i = 0; i < movies.length; i++) {
+                          await new Promise((r) => setTimeout(r, 120));
+                          this.content.push(movies[i]);
+                        }*/
+          },
+        }));
+      });
+    </script>
+  </body>
+</html>
